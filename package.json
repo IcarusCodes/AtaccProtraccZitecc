@@ -1,6 +1,10 @@
 {
   "dependencies": {
+    "fs-extra": "^1.0.0",
     "jasmine": "^2.8.0",
-    "protractor": "^7.0.0"
+    "jasmine-reporters": "^2.4.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "protractor": "^7.0.0",
+    "protractor-html-reporter-2": "^1.0.4"
   }
 }

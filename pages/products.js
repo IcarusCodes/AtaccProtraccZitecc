@@ -1,12 +1,25 @@
 const { browser, ExpectedConditions, $, element, by } = require("protractor");
 
 class Products {
+
+    #tShirtShortSleevePrice = '16.51'
+    #currencySymbol = '$'
+
+
+
+    // Dresses
+
+    // T-Shirts
+
+
+    // Locators
     #tShirtShortSleeve = $('a[title="Faded Short Sleeve T-shirts"]');
     #expandedView = element(by.xpath('//*[@id="center_column"]/ul/li/div/div[1]/div/a[1]/img'));
     #moreBtn = element(by.xpath('//a[@title="View"]'));
     #addToCart = element(by.xpath('//button[@name="Submit"]'));
     #proceed2Co = element(by.xpath('//a[@title="Proceed to checkout"]'))
 
+    // Product customization
     #productQuantity = element(by.id('quantity_wanted'));
     #productSize = element(by.id('group_1'));
     #smallSize = element(by.xpath('//option[@title="S"]'));
@@ -15,6 +28,7 @@ class Products {
 
     #productColorOrange = element(by.id('color_13'));
     #productColorBlue = element(by.id('color_14'));
+
 
     async goToShortSleeve() {
         await this.#tShirtShortSleeve.click();

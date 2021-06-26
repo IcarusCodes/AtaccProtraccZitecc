@@ -29,19 +29,28 @@ describe("Complete a valid order using wire payment, for 3 orange M shirts.", ()
     it("Should add 3 orange M Shirts to the cart", async () => {
         await homePage.goToTshirts();
         await products.mouseOverAndClickMore();
+        // @TODO await products.checkProductQuantityPrice(1);
         await products.changeProductQuantity(3);
+        // @TODO await products.checkProductQuantityPrice(3);
         await products.changeProductSize("M");
         await products.addProductToCart();
         await products.proceedToCheckout();
+        // @TODO products.checkTotalPrice(3);
     });
 
     it("Should successfully complete the order.", async () => {
+        // A price check could've been done here, but I have decided to do it in the final checkout step instead.
         await checkout.goToAddress();
         await checkout.goToShipping();
+        // @TODO await checkout.getShippingPrice();
         await checkout.agreeToShippingTerms();
         await checkout.goToPayment();
+        // @TODO homepage.screenshot
+        // @TODO await checkout.getTotalProductsPrice
+        // @TODO await checkout.getTotalShippingPrice
+        // @TODO await checkout.getTotalPrice
         await checkout.payByWire();
         await checkout.confirmOrder();
-        await browser.sleep(12312321);
+        // @TODO homepage.screenshot
     });
 });
