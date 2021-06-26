@@ -53,7 +53,7 @@ class Products {
     }
 
     async proceedToCheckout() {
-        await browser.wait(ExpectedConditions.visibilityOf(this.#proceed2Co), 10000)
+        await browser.wait(ExpectedConditions.visibilityOf(this.#proceed2Co), 10000);
         await this.#proceed2Co.click();
     }
 }

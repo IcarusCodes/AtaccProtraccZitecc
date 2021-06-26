@@ -2,12 +2,14 @@ const { browser } = require("protractor");
 const { HomePage } = require("../pages/homepage");
 const { SignIn } = require("../pages/signIn");
 const { Products } = require("../pages/products");
+const { Checkout } = require("../pages/checkout");
 
 const homePage = new HomePage();
 const signIn = new SignIn();
 const products = new Products();
+const checkout = new Checkout();
 
-describe("Sign In and add checkout short sleeve tshirt", () => {
+describe("Complete a valid order using wire payment, for 3 orange M shirts.", () => {
 
     beforeAll(async () => {
         browser.ignoreSynchronization = true;
@@ -33,4 +35,13 @@ describe("Sign In and add checkout short sleeve tshirt", () => {
         await products.proceedToCheckout();
     });
 
+    it("Should successfully complete the order.", async () => {
+        await checkout.goToAddress();
+        await checkout.goToShipping();
+        await checkout.agreeToShippingTerms();
+        await checkout.goToPayment();
+        await checkout.payByWire();
+        await checkout.confirmOrder();
+        await browser.sleep(12312321);
+    });
 });

@@ -1,4 +1,4 @@
-const { browser, ExpectedConditions, $, element, by } = require("protractor");
+const { $, element, by } = require("protractor");
 
 class HomePage {
     #signInBtn = element(by.linkText("Sign in"));
@@ -8,6 +8,7 @@ class HomePage {
     #signOut = $('a[title="Log me out"]');
 
     baseUrl = "http://automationpractice.com/index.php";
+    waitTime = 10000;
 
     async goToLogin() {
         await this.#signInBtn.click();

@@ -1,4 +1,4 @@
-const { element, by } = require("protractor");
+const { browser, element, by, ExpectedConditions } = require("protractor");
 
 class SignIn {
     #emailInput = element(by.id("email"));
@@ -6,14 +6,17 @@ class SignIn {
     #submitBtn = element(by.id("SubmitLogin"));
 
     async enterEmail(email = "dibofa8597@bbsaili.com") {
+        await browser.wait(ExpectedConditions.visibilityOf(this.#emailInput), 10000)
         await this.#emailInput.sendKeys(email);
     }
 
     async enterPassword(passwd = "Pentest123#") {
+        await browser.wait(ExpectedConditions.visibilityOf(this.#passInput), 10000)
         await this.#passInput.sendKeys(passwd);
     }
 
     async clickSubmitBtn() {
+        await browser.wait(ExpectedConditions.visibilityOf(this.#submitBtn), 10000)
         await this.#submitBtn.click();
     }
 
