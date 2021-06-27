@@ -1,6 +1,12 @@
 # Pycharm
 .idea/
 
+# Screenshots folder
+screenshots/
+
+# Reports folder
+reports/
+
 # Logs
 logs
 *.log
