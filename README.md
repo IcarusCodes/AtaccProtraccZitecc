@@ -1,5 +1,5 @@
 # AtaccProtraccZitecc
-#### *A TypeScript Protractor on Jasmine Automation Framework*
+#### *A Protractor on Jasmine Automation Framework*
 
 ## Note to interviewers 
 
@@ -17,12 +17,12 @@ refactoring to be done and maybe not the best JS practices since I haven't used 
 Documenting your code is **very** important, there is an unofficial belief that there should be one comment for *roughly* 
 every 10 lines of code.    
  
- **I do abide by this** in some more complex projects/codebases, but I believe that when you read a page object 
+ **I do abide by this**, but I also believe that when you read a page object 
 you should be able to **understand** all the web elements of the page just from the **variable names** and when trying 
  to understand the functionalities of the page you should be able to do so **just by reading the method names**.
 
 With that said I have provided some comments where I've felt it might have been needed, but *moreso* I've tried to name 
-the variables in a verbose way.
+the variables and methods in a verbose way.
 
 
 ## Setup
@@ -36,12 +36,21 @@ the variables in a verbose way.
 
 ## Running and reporting
 
-
+Test cases can be run by issuing the following command:  
+  
+`protractor conf.js`
 
 
 Since I didn't have very much time to spend on this project(follow the commits) I have used some readily
 available code for the reporting part. I have fixed [this](https://praveendavidmathew.medium.com/creating-html-reports-for-protractor-7d9830ebf428) old broken code
 and integrated it into this framework.
+
+The main report is ProtractorTestReport.html:
+![html report](https://imgur.com/HRbshXO)
+
+
+But jasmine has some cli reporting too:
+![cli report](https://imgur.com/yjrmbAA)
 
 ## Test Cases:  
 Positive
