@@ -3,11 +3,13 @@ const { HomePage } = require("../pages/homepage");
 const { SignIn } = require("../pages/signIn");
 const { Products } = require("../pages/products");
 const { Checkout } = require("../pages/checkout");
+const { Utils } = require('../pages/utils')
 
 const homePage = new HomePage();
 const signIn = new SignIn();
 const products = new Products();
 const checkout = new Checkout();
+const utils = new Utils();
 
 describe("Complete a valid order using wire payment, for 3 orange M shirts.", () => {
 
@@ -42,15 +44,12 @@ describe("Complete a valid order using wire payment, for 3 orange M shirts.", ()
         // A price check could've been done here, but I have decided to do it in the final checkout step instead.
         await checkout.goToAddress();
         await checkout.goToShipping();
-        // @TODO await checkout.getShippingPrice();
         await checkout.agreeToShippingTerms();
         await checkout.goToPayment();
-        // @TODO homepage.screenshot
-        // @TODO await checkout.getTotalProductsPrice
-        // @TODO await checkout.getTotalShippingPrice
-        // @TODO await checkout.getTotalPrice
+        await utils.takeScreenshot("Cart - Products Overview");
+        await checkout.calculateTotalPrice();
         await checkout.payByWire();
         await checkout.confirmOrder();
-        // @TODO homepage.screenshot
+        await utils.takeScreenshot("Cart - Order Complete")
     });
 });

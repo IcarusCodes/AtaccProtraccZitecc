@@ -10,10 +10,17 @@ class Checkout {
     #checkPayment = element(by.xpath('//a[@title="Pay by check."]'));
     #confirmOrderBtn = element(by.xpath('//span[text()="I confirm my order"]'));
 
+    #totalPrice = element(by.id('total_price'));
+    #totalProductPrice = element(by.id('total_product'));
+    #totalShipping = element(by.id('total_shipping'));
 
 
     async goToAddress() {
-        await browser.wait(ExpectedConditions.visibilityOf(this.#summaryCheckout), 10000);
+        await browser.wait(
+            ExpectedConditions.visibilityOf(this.#summaryCheckout),
+            10000,
+            "Could not find #summaryCheckout => could not proceed to checkout."
+        );
         await this.#summaryCheckout.click();
     }
 
@@ -50,6 +57,24 @@ class Checkout {
         await this.#currentStep.getText().then(txt => {
             return txt;
         });
+    }
+
+    async calculateTotalPrice() {
+
+        let totalProductsPrice = parseFloat(await this.#totalProductPrice.getText().then(txt => {
+                return txt.replace('$', '');
+            })
+        );
+        let totalShippingPrice = parseFloat(await this.#totalShipping.getText().then(txt => {
+                txt.replace('$', '');
+            })
+        );
+        let totalPrice = parseFloat(await this.#totalPrice.getText().then(txt => {
+                txt.replace('$', '');
+            })
+        );
+
+        expect(totalProductsPrice + totalShippingPrice).toEqual(totalPrice);
     }
 }
 

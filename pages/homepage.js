@@ -21,6 +21,7 @@ class HomePage {
     async isSignOutDisplayed() {
         expect(await this.#signOut.isDisplayed()).toBe(true, "The login failed.");
     }
+
 }
 
 exports.HomePage = HomePage;
