@@ -1,11 +1,9 @@
 const { browser } = require("protractor");
-const { HomePage } = require("../pages/homepage");
 const { SignIn } = require("../pages/signIn");
 const { Products } = require("../pages/products");
 const { Checkout } = require("../pages/checkout");
 const { Utils } = require('../pages/utils')
 
-const homePage = new HomePage();
 const signIn = new SignIn();
 const products = new Products();
 const checkout = new Checkout();
@@ -15,8 +13,9 @@ describe("Cart Regression Suites", () => {
 
     beforeAll(async () => {
         browser.ignoreSynchronization = true;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
         await browser.driver.manage().window().maximize();
-        await browser.get(homePage.baseUrl);
+        await browser.get(utils.baseUrl);
         await signIn.signInAndVerify();
     });
 
@@ -35,5 +34,11 @@ describe("Cart Regression Suites", () => {
         await products.addProductToCart("dresses", 2, "M", "evening");
         await checkout.completeOrder();
     })
+
+
+    it("Negative should remove the product from cart and try to");
+    it("Negative should proceed to checkout with an empty cart");
+    it("Negative should not accept the shipping method");
+    it("Negative should not be logged in");
 
 });

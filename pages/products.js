@@ -1,9 +1,11 @@
 const { browser, ExpectedConditions, $, element, by } = require("protractor");
+const { Utils } = require('../pages/utils')
+
+const utils = new Utils();
 
 class Products {
 
     #shippingPrice = '2';
-
 
     #products = {
         "Tshirts": {
@@ -34,13 +36,9 @@ class Products {
 
     // Category Navigation
     #tShirtsBtn = element(by.linkText("T-SHIRTS"));
-    #dressesBtn = element(by.linkText("DRESSES"));
-    #casualDressesBtn = element(by.linkText("CASUAL DRESSES"));
-    #eveningDressesBtn = element(by.linkText("EVENING DRESSES"));
-    #summerDressesBtn  = element(by.linkText("SUMMER DRESSES"));
+
 
     // Locators
-    #tShirtShortSleeve = $('a[title="Faded Short Sleeve T-shirts"]');
     #expandedView = element(by.xpath('//*[@id="center_column"]/ul/li/div/div[1]/div/a[1]/img'));
     #moreBtn = element(by.xpath('//a[@title="View"]'));
     #addToCart = element(by.xpath('//button[@name="Submit"]'));
@@ -87,21 +85,28 @@ class Products {
     }
 
     async proceedToCheckout() {
-        await browser.wait(ExpectedConditions.visibilityOf(this.#proceed2Co), 10000);
+        await browser.wait(
+            ExpectedConditions.visibilityOf(this.#proceed2Co),
+            utils.explicitWaitTime,
+            "Could not proceed to checkout, element '#proceed2Co' not visibile."
+        );
         await this.#proceed2Co.click();
     }
 
     async goToTshirts() {
-        await this.#tShirtsBtn.click();
+        await this.#products['Tshirts']['nav'].click();
     }
 
     async goToDresses(type) {
-        await this.#products['Dresses']['nav'].click()
+        await this.#products['Dresses']['nav'].click();
 
         if (type === "casual") {
-            await this.#products['Dresses']['casual']['nav'].click()
+            await this.#products['Dresses']['casual']['nav'].click();
         } else if (type === "evening") {
-            await this.#products['Dresses']['evening']['nav'].click()
+            await this.#products['Dresses']['evening']['nav'].click();
+        } else {
+            console.log("Wrong type specified, defaulting to casual dresses.");
+            await this.#products['Dresses']['casual']['nav'].click();
         }
 
     }
