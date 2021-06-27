@@ -1,4 +1,7 @@
 const { browser, element, by, ExpectedConditions } = require("protractor");
+const { Utils } = require('../pages/utils');
+
+const utils = new Utils();
 
 class SignIn {
     #emailInput = element(by.id("email"));
@@ -8,17 +11,29 @@ class SignIn {
     #signOut = $('a[title="Log me out"]');
 
     async enterEmail(email = "dibofa8597@bbsaili.com") {
-        await browser.wait(ExpectedConditions.visibilityOf(this.#emailInput), 10000)
+        await browser.wait(
+            ExpectedConditions.visibilityOf(this.#emailInput),
+            utils.explicitWaitTime,
+            "The email input field #emailInput was not visible."
+        );
         await this.#emailInput.sendKeys(email);
     }
 
     async enterPassword(passwd = "Pentest123#") {
-        await browser.wait(ExpectedConditions.visibilityOf(this.#passInput), 10000)
+        await browser.wait(
+            ExpectedConditions.visibilityOf(this.#passInput),
+            utils.explicitWaitTime,
+            "The password input field #passInput was not visible."
+        );
         await this.#passInput.sendKeys(passwd);
     }
 
     async clickSubmitBtn() {
-        await browser.wait(ExpectedConditions.visibilityOf(this.#submitBtn), 10000)
+        await browser.wait(
+            ExpectedConditions.visibilityOf(this.#submitBtn),
+            utils.explicitWaitTime,
+            "The submit login button #submitBtn was not visible."
+        );
         await this.#submitBtn.click();
     }
 

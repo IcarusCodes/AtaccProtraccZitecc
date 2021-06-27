@@ -5,8 +5,7 @@ const utils = new Utils();
 
 class Products {
 
-    #shippingPrice = '2';
-
+    // This should be its own class eventually
     #products = {
         "Tshirts": {
             "nav": element(by.linkText("T-SHIRTS")),
@@ -34,15 +33,12 @@ class Products {
         }
     }
 
-    // Category Navigation
-    #tShirtsBtn = element(by.linkText("T-SHIRTS"));
-
-
     // Locators
     #expandedView = element(by.xpath('//*[@id="center_column"]/ul/li/div/div[1]/div/a[1]/img'));
     #moreBtn = element(by.xpath('//a[@title="View"]'));
     #addToCart = element(by.xpath('//button[@name="Submit"]'));
-    #proceed2Co = element(by.xpath('//a[@title="Proceed to checkout"]'))
+    #proceed2Co = element(by.xpath('//a[@title="Proceed to checkout"]'));
+    #totalPrice = element(by.id('layer_cart_product_price'));
 
     // Product customization
     #productQuantity = element(by.id('quantity_wanted'));
@@ -105,35 +101,25 @@ class Products {
         } else if (type === "evening") {
             await this.#products['Dresses']['evening']['nav'].click();
         } else {
+            // This will be removed when we also implement summer dresses
             console.log("Wrong type specified, defaulting to casual dresses.");
             await this.#products['Dresses']['casual']['nav'].click();
         }
-
     }
 
-    async calculateExpectedPrice(product, qty) {
-
+    async navigateToProductCategory(prodType) {
+        // If the prodType is empty go to tshirts, otherwise select the dress
+        prodType === "" ? await this.goToTshirts() : await this.goToDresses(prodType)
     }
 
-    async addProductToCart(prod, qty, size, dressType) {
-        switch (prod) {
-            case "tshirt":
-                await this.goToTshirts();
-                break;
-            case "dresses":
-                await this.goToDresses(dressType)
-                break;
-            default:
-                break;
-        }
+    // Main flow
+    async addProductToCart(qty, size, prodType="") {
+        await this.navigateToProductCategory(prodType);
         await this.mouseOverAndClickMore();
-        // @TODO await products.checkProductQuantityPrice(1);
         await this.changeProductQuantity(qty);
-        // @TODO await products.checkProductQuantityPrice(3);
         await this.changeProductSize(size);
         await this.addToCart();
         await this.proceedToCheckout();
-        // @TODO products.checkTotalPrice(3);
     }
 }
 
