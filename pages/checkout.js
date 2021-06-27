@@ -12,6 +12,7 @@ class Checkout {
     #confirmOrderBtn = element(by.xpath('//span[text()="I confirm my order"]'));
     #removeProductBtn = element(by.xpath('//a[@title="Delete"]'));
     #emptyShoppingCartWarning = element(by.xpath('//p[@class="alert alert-warning"]'));
+    #shoppingCartBtn = element(by.xpath('//a[@title="View my shopping cart"]'));
 
     #totalPrice = element(by.id('total_price'));
     #totalProductPrice = element(by.id('total_product'));
@@ -26,6 +27,11 @@ class Checkout {
             "Could not find #summaryCheckout => could not proceed to checkout."
         );
         await this.#summaryCheckout.click();
+    }
+
+    // Go to shopping cart
+    async goToShoppingCart() {
+        await this.#shoppingCartBtn.click()
     }
 
     // Navigate to the shipping step of the cart
