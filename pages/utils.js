@@ -28,21 +28,6 @@ class Utils {
             second: '2-digit'
         });
     }
-
-     hasOwnDeepProperty(obj, prop) {
-        if (typeof obj === 'object' && obj !== null) {
-            if (obj.hasOwnProperty(prop)) {
-                return true;
-            }
-            for (let p in obj) {
-                if (obj.hasOwnProperty(p) &&
-                    this.hasOwnDeepProperty(obj[p], prop)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }
 
 exports.Utils = Utils;

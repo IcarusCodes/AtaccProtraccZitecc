@@ -52,6 +52,10 @@ The main report is ProtractorTestReport.html:
 But jasmine has some cli reporting too:
 ![cli report](https://i.imgur.com/yjrmbAA.png)
 
+
+I am sorry for the unhandled warnings, I should add some .catch functions to get rid of them, but the warnings are really
+vague - lack of stack trace and it will take me more time than I have to spend.
+
 ## Test Cases:  
 
 | Scenario | Type | Expected behavior |

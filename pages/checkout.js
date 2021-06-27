@@ -3,30 +3,32 @@ const { Utils } = require('../pages/utils')
 const utils = new Utils();
 
 class Checkout {
-    #summaryCheckout = element(by.xpath('//span[text()="Proceed to checkout"]'));
-    #addressCheckout = element(by.name("processAddress"));
-    #paymentCheckout = element(by.name("processCarrier"));
-    #shippingTerms = element(by.id('cgv'));
-    #wirePayment = element(by.xpath('//a[@title="Pay by bank wire"]'));
-    #checkPayment = element(by.xpath('//a[@title="Pay by check."]'));
+    // Cart steps
+    #summaryCheckoutStep = element(by.xpath('//span[text()="Proceed to checkout"]'));
+    #addressCheckoutStep = element(by.name("processAddress"));
+    #paymentCheckoutStep = element(by.name("processCarrier"));
+
+    #shippingTermsCheckbox = element(by.id('cgv'));
+    #wirePaymentBtn = element(by.xpath('//a[@title="Pay by bank wire"]'));
+    #checkPaymentBtn = element(by.xpath('//a[@title="Pay by check."]'));
     #confirmOrderBtn = element(by.xpath('//span[text()="I confirm my order"]'));
     #removeProductBtn = element(by.xpath('//a[@title="Delete"]'));
     #emptyShoppingCartWarning = element(by.xpath('//p[@class="alert alert-warning"]'));
     #shoppingCartBtn = element(by.xpath('//a[@title="View my shopping cart"]'));
 
-    #totalPrice = element(by.id('total_price'));
-    #totalProductPrice = element(by.id('total_product'));
-    #totalShipping = element(by.id('total_shipping'));
+    #totalPriceValue = element(by.id('total_price'));
+    #totalProductPriceValue = element(by.id('total_product'));
+    #totalShippingValue = element(by.id('total_shipping'));
 
 
     // Navigate to the address step of the cart
     async goToAddress() {
         await browser.wait(
-            ExpectedConditions.visibilityOf(this.#summaryCheckout),
+            ExpectedConditions.visibilityOf(this.#summaryCheckoutStep),
             utils.explicitWaitTime,
-            "Could not find #summaryCheckout => could not proceed to checkout."
+            "Could not find #summaryCheckoutStep => could not proceed to checkout."
         );
-        await this.#summaryCheckout.click();
+        await this.#summaryCheckoutStep.click();
     }
 
     // Go to shopping cart
@@ -37,21 +39,21 @@ class Checkout {
     // Navigate to the shipping step of the cart
     async goToShipping() {
         await browser.wait(
-            ExpectedConditions.visibilityOf(this.#addressCheckout),
+            ExpectedConditions.visibilityOf(this.#addressCheckoutStep),
             utils.explicitWaitTime,
             "Could not find #addressCheckout => could not proceed to shipping."
         );
-        await this.#addressCheckout.click();
+        await this.#addressCheckoutStep.click();
     }
 
     // Navigate to the payment step of the cart
     async goToPayment() {
         await browser.wait(
-            ExpectedConditions.visibilityOf(this.#paymentCheckout),
+            ExpectedConditions.visibilityOf(this.#paymentCheckoutStep),
             utils.explicitWaitTime,
             "Could not find #paymentCheckout => could not proceed to payment."
         );
-        await this.#paymentCheckout.click();
+        await this.#paymentCheckoutStep.click();
     }
 
     async removeProductFromCart() {
@@ -80,21 +82,21 @@ class Checkout {
     // Select wire payment method
     async payByWire() {
         await browser.wait(
-            ExpectedConditions.visibilityOf(this.#wirePayment),
+            ExpectedConditions.visibilityOf(this.#wirePaymentBtn),
             utils.explicitWaitTime,
             "Could not find #wirePayment."
         );
-        await this.#wirePayment.click();
+        await this.#wirePaymentBtn.click();
     }
 
     // Select check payment method
     async payByCheck() {
         await browser.wait(
-            ExpectedConditions.visibilityOf(this.#checkPayment),
+            ExpectedConditions.visibilityOf(this.#checkPaymentBtn),
             utils.explicitWaitTime,
             "Could not find #checkPayment"
         );
-        await this.#checkPayment.click();
+        await this.#checkPaymentBtn.click();
     }
 
     // Place the order by confirming it
@@ -109,21 +111,21 @@ class Checkout {
 
     // Agree to the shipping terms and conditions
     async agreeToShippingTerms() {
-        await this.#shippingTerms.click();
+        await this.#shippingTermsCheckbox.click();
     }
 
     // Grab the price of all products added to cart and make sure the total is properly calculated
     async calculateTotalPrice(expectedPrice) {
 
-        let totalProductsPrice = parseFloat(await this.#totalProductPrice.getText().then(txt => {
+        let totalProductsPrice = parseFloat(await this.#totalProductPriceValue.getText().then(txt => {
                 return txt.replace('$', '');
             })
         );
-        let totalShippingPrice = parseFloat(await this.#totalShipping.getText().then(txt => {
+        let totalShippingPrice = parseFloat(await this.#totalShippingValue.getText().then(txt => {
                 return txt.replace('$', '');
             })
         );
-        let totalPrice = parseFloat(await this.#totalPrice.getText().then(txt => {
+        let totalPrice = parseFloat(await this.#totalPriceValue.getText().then(txt => {
                 return txt.replace('$', '');
             })
         );
@@ -159,6 +161,5 @@ class Checkout {
         await utils.takeScreenshot("Cart - Order Complete")
     }
 }
-
 
 exports.Checkout = Checkout;

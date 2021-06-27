@@ -5,7 +5,7 @@ const utils = new Utils();
 
 class Products {
 
-    // This should be its own class eventually
+    // This should be its own class eventually / a db would be better / or a separate json data file.
     #products = {
         "Tshirts": {
             "nav": element(by.linkText("T-SHIRTS")),
@@ -36,16 +36,15 @@ class Products {
     // Locators
     #expandedView = element(by.xpath('//*[@id="center_column"]/ul/li/div/div[1]/div/a[1]/img'));
     #moreBtn = element(by.xpath('//a[@title="View"]'));
-    #addToCart = element(by.xpath('//button[@name="Submit"]'));
-    #proceed2Co = element(by.xpath('//a[@title="Proceed to checkout"]'));
-    #totalPrice = element(by.id('layer_cart_product_price'));
+    #addToCartBtn = element(by.xpath('//button[@name="Submit"]'));
+    #proceed2CoBtn = element(by.xpath('//a[@title="Proceed to checkout"]'));
 
     // Product customization
-    #productQuantity = element(by.id('quantity_wanted'));
-    #productSize = element(by.id('group_1'));
-    #smallSize = element(by.xpath('//option[@title="S"]'));
-    #mediumSize = element(by.xpath('//option[@title="M"]'));
-    #largeSize = element(by.xpath('//option[@title="L"]'));
+    #productQuantityField = element(by.id('quantity_wanted'));
+    #productSizeDropdown = element(by.id('group_1'));
+    #smallSizeBtn = element(by.xpath('//option[@title="S"]'));
+    #mediumSizeBtn = element(by.xpath('//option[@title="M"]'));
+    #largeSizeBtn = element(by.xpath('//option[@title="L"]'));
 
 
     async mouseOverAndClickMore() {
@@ -57,36 +56,36 @@ class Products {
     }
 
     async changeProductQuantity(qty) {
-        await this.#productQuantity.clear();
-        await this.#productQuantity.sendKeys(qty);
+        await this.#productQuantityField.clear();
+        await this.#productQuantityField.sendKeys(qty);
     }
 
     async changeProductSize(size="S") {
-        await this.#productSize.click();
+        await this.#productSizeDropdown.click();
         switch(size) {
             case "S":
-                await this.#smallSize.click();
+                await this.#smallSizeBtn.click();
                 break;
             case "M":
-                await this.#mediumSize.click();
+                await this.#mediumSizeBtn.click();
                 break;
             case "L":
-                await this.#largeSize.click();
+                await this.#largeSizeBtn.click();
                 break;
         }
     }
 
     async addToCart() {
-        await this.#addToCart.click();
+        await this.#addToCartBtn.click();
     }
 
     async proceedToCheckout() {
         await browser.wait(
-            ExpectedConditions.visibilityOf(this.#proceed2Co),
+            ExpectedConditions.visibilityOf(this.#proceed2CoBtn),
             utils.explicitWaitTime,
             "Could not proceed to checkout, element '#proceed2Co' not visibile."
         );
-        await this.#proceed2Co.click();
+        await this.#proceed2CoBtn.click();
     }
 
     async goToTshirts() {
@@ -108,7 +107,6 @@ class Products {
     }
 
     async navigateToProductCategory(prodType) {
-        // If the prodType is empty go to tshirts, otherwise select the dress
         prodType === "" ? await this.goToTshirts() : await this.goToDresses(prodType)
     }
 

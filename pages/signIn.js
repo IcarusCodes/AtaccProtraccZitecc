@@ -8,7 +8,7 @@ class SignIn {
     #passInput = element(by.id("passwd"));
     #submitBtn = element(by.id("SubmitLogin"));
     #signInBtn = element(by.linkText("Sign in"));
-    #signOut = $('a[title="Log me out"]');
+    #signOutBtn = $('a[title="Log me out"]');
 
     async enterEmail(email = "dibofa8597@bbsaili.com") {
         await browser.wait(
@@ -42,7 +42,7 @@ class SignIn {
     }
 
     async isSignOutDisplayed() {
-        expect(await this.#signOut.isDisplayed()).toBe(true, "The login failed.");
+        expect(await this.#signOutBtn.isDisplayed()).toBe(true, "The login failed.");
     }
 
     async signInAndVerify(email, pass) {
