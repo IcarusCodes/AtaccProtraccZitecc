@@ -46,17 +46,21 @@ available code for the reporting part. I have fixed [this](https://praveendavidm
 and integrated it into this framework.
 
 The main report is ProtractorTestReport.html:
-![html report](https://imgur.com/HRbshXO)
+![html report](https://i.imgur.com/HRbshXO.png)
 
 
 But jasmine has some cli reporting too:
-![cli report](https://imgur.com/yjrmbAA)
+![cli report](https://i.imgur.com/yjrmbAA.png)
 
 ## Test Cases:  
-Positive
 
+| Scenario | Type | Expected behavior |
+| :---:         |     :---:      |          :---: |
+| Should complete a valid order using wire payment, for 3 orange M shirts.   | Positive     | The price should be calculated correctly and the order should be completed.    |
+| Should complete a valid order using check payment, for 5 L printed dresses.     | Positive      | The price should be calculated correctly and the order should be completed.      |
+| Should complete a valid order using wire payment for 3 S shirts and 2 M evening dresses.   | Positive     | The price should be calculated correctly and the order should be completed.    |
+| Should try adding -5 T-Shirts to cart | Negative     | The value -5 should be converted to 5 and the order should be completed.  |
+| Should remove the product from cart and try to proceed to checkout    | Negative      | After removing the product, an error message stating the cart is empty should be displayed.     |
+| Negative should proceed to checkout with an empty cart   | Negative     | An error message stating the cart is empty should be displayed.    |
 
-
-
-#### Final boomer note: I know that the company is called Zitech and not Zitecc, it is a play on words - just like Protecc was replaced by Protracc - a reference to Protractor. If unfamilliar with the meme or just confused about the project name, please see [this](https://knowyourmeme.com/memes/he-protec-but-he-also-attac).   
-
+#### Final boomer note: I know that the company is called Zitech and not Zitecc, it is a play on words - just like Protecc was replaced by Protracc - a reference to Protractor. If unfamilliar with the meme or just confused about the project name, please see [this](https://knowyourmeme.com/memes/he-protec-but-he-also-attac).
