@@ -1,7 +1,7 @@
 # AtaccProtraccZitecc
 #### *A TypeScript Protractor on Jasmine Automation Framework*
 
-##Note to interviewers 
+## Note to interviewers 
 
 I will use this readme to also state some of my opinions on automation/code as well as trying to directly interact with  the interviewers, hello there!
 
@@ -25,13 +25,13 @@ With that said I have provided some comments where I've felt it might have been 
 the variables in a verbose way.
 
 
-##Setup
+## Setup
 
-npm i
+`npm i` To install all dev dependencies;
 
-webdriver-manager update
+`webdriver-manager update` This works if protractor is properly installed.
 
-webdriver-manager start &
+`webdriver-manager start --detach` Can be run without the *detach* flag.
 
 
 ## Running and reporting
@@ -40,10 +40,10 @@ webdriver-manager start &
 
 
 Since I didn't have very much time to spend on this project(follow the commits) I have used some readily
-available code for the reporting part. I've instead just fixed [this](https://praveendavidmathew.medium.com/creating-html-reports-for-protractor-7d9830ebf428) old broken code. 
+available code for the reporting part. I have fixed [this](https://praveendavidmathew.medium.com/creating-html-reports-for-protractor-7d9830ebf428) old broken code
+and integrated it into this framework.
 
-
-##Test Cases:  
+## Test Cases:  
 Positive
 
 

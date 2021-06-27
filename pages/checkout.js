@@ -1,4 +1,6 @@
 const { browser, element, by, ExpectedConditions } = require('protractor');
+const { Utils } = require('../pages/utils')
+const utils = new Utils();
 
 class Checkout {
     #summaryCheckout = element(by.xpath('//span[text()="Proceed to checkout"]'));
@@ -76,6 +78,26 @@ class Checkout {
 
         expect(totalProductsPrice + totalShippingPrice).toEqual(totalPrice);
     }
+
+    async completeOrder(paymentType) {
+        await this.goToAddress();
+        await this.goToShipping();
+        await this.agreeToShippingTerms();
+        await this.goToPayment();
+        await utils.takeScreenshot("Cart - Products Overview");
+        await this.calculateTotalPrice();
+        if (paymentType === "wire") {
+            await this.payByWire()
+        } else if(paymentType === "check") {
+            await this.payByCheck()
+        } else {
+            console.log("Wrong payment type specified, defaulting to wire.");
+            await this.payByWire()
+        }
+        await this.confirmOrder();
+        await utils.takeScreenshot("Cart - Order Complete")
+    }
+
 }
 
 

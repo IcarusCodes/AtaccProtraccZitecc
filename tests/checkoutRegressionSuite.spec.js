@@ -11,45 +11,29 @@ const products = new Products();
 const checkout = new Checkout();
 const utils = new Utils();
 
-describe("Complete a valid order using wire payment, for 3 orange M shirts.", () => {
+describe("Cart Regression Suites", () => {
 
     beforeAll(async () => {
         browser.ignoreSynchronization = true;
         await browser.driver.manage().window().maximize();
         await browser.get(homePage.baseUrl);
+        await signIn.signInAndVerify();
     });
 
-    it("Should Sign In", async () => {
-        await homePage.goToLogin();
-        await signIn.enterEmail();
-        await signIn.enterPassword();
-        await signIn.clickSubmitBtn();
-
-        await homePage.isSignOutDisplayed();
+    it("Should complete a valid order using wire payment, for 3 orange M shirts.", async () => {
+        await products.addProductToCart("tshirt", 3, "M");
+        await checkout.completeOrder();
     });
 
-    it("Should add 3 orange M Shirts to the cart", async () => {
-        await homePage.goToTshirts();
-        await products.mouseOverAndClickMore();
-        // @TODO await products.checkProductQuantityPrice(1);
-        await products.changeProductQuantity(3);
-        // @TODO await products.checkProductQuantityPrice(3);
-        await products.changeProductSize("M");
-        await products.addProductToCart();
-        await products.proceedToCheckout();
-        // @TODO products.checkTotalPrice(3);
+    it("Should complete a valid order using check payment, for 5 L printed dresses.", async () => {
+        await products.addProductToCart("dresses", 5, "L", "casual" );
+        await checkout.completeOrder();
     });
 
-    it("Should successfully complete the order.", async () => {
-        // A price check could've been done here, but I have decided to do it in the final checkout step instead.
-        await checkout.goToAddress();
-        await checkout.goToShipping();
-        await checkout.agreeToShippingTerms();
-        await checkout.goToPayment();
-        await utils.takeScreenshot("Cart - Products Overview");
-        await checkout.calculateTotalPrice();
-        await checkout.payByWire();
-        await checkout.confirmOrder();
-        await utils.takeScreenshot("Cart - Order Complete")
-    });
+    it("Should complete a valid order using wire payment for 3 S tshirts and 2 M evening dresses.", async() => {
+        await products.addProductToCart("tshirt", 3, "S");
+        await products.addProductToCart("dresses", 2, "M", "evening");
+        await checkout.completeOrder();
+    })
+
 });

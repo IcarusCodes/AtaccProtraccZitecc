@@ -2,15 +2,42 @@ const { browser, ExpectedConditions, $, element, by } = require("protractor");
 
 class Products {
 
-    #tShirtShortSleevePrice = '16.51'
-    #currencySymbol = '$'
+    #shippingPrice = '2';
 
 
+    #products = {
+        "Tshirts": {
+            "nav": element(by.linkText("T-SHIRTS")),
+            "shortSleeve": {
+                "locator": $('a[title="Faded Short Sleeve T-shirts"]'),
+                "price": 16.51
+            }
+        },
+        "Dresses": {
+            "nav": element(by.linkText("DRESSES")),
+            "casual": {
+                "nav": element(by.linkText("CASUAL DRESSES")),
+                "casualPrintedDress": {
+                    "locator": element(by.xpath('//img[@title="Printed Dress"]')),
+                    "price": 26.00
+                }
+            },
+            "evening": {
+                "nav": element(by.linkText("EVENING DRESSES")),
+                "eveningPrintedDress": {
+                    "locator": element(by.xpath('//img[@title="Printed Dress"]')),
+                    "price": 50.99
+                }
+            }
+        }
+    }
 
-    // Dresses
-
-    // T-Shirts
-
+    // Category Navigation
+    #tShirtsBtn = element(by.linkText("T-SHIRTS"));
+    #dressesBtn = element(by.linkText("DRESSES"));
+    #casualDressesBtn = element(by.linkText("CASUAL DRESSES"));
+    #eveningDressesBtn = element(by.linkText("EVENING DRESSES"));
+    #summerDressesBtn  = element(by.linkText("SUMMER DRESSES"));
 
     // Locators
     #tShirtShortSleeve = $('a[title="Faded Short Sleeve T-shirts"]');
@@ -26,13 +53,6 @@ class Products {
     #mediumSize = element(by.xpath('//option[@title="M"]'));
     #largeSize = element(by.xpath('//option[@title="L"]'));
 
-    #productColorOrange = element(by.id('color_13'));
-    #productColorBlue = element(by.id('color_14'));
-
-
-    async goToShortSleeve() {
-        await this.#tShirtShortSleeve.click();
-    }
 
     async mouseOverAndClickMore() {
         // Hover over product in order to display more options
@@ -62,13 +82,53 @@ class Products {
         }
     }
 
-    async addProductToCart() {
+    async addToCart() {
         await this.#addToCart.click();
     }
 
     async proceedToCheckout() {
         await browser.wait(ExpectedConditions.visibilityOf(this.#proceed2Co), 10000);
         await this.#proceed2Co.click();
+    }
+
+    async goToTshirts() {
+        await this.#tShirtsBtn.click();
+    }
+
+    async goToDresses(type) {
+        await this.#products['Dresses']['nav'].click()
+
+        if (type === "casual") {
+            await this.#products['Dresses']['casual']['nav'].click()
+        } else if (type === "evening") {
+            await this.#products['Dresses']['evening']['nav'].click()
+        }
+
+    }
+
+    async calculateExpectedPrice(product, qty) {
+
+    }
+
+    async addProductToCart(prod, qty, size, dressType) {
+        switch (prod) {
+            case "tshirt":
+                await this.goToTshirts();
+                break;
+            case "dresses":
+                await this.goToDresses(dressType)
+                break;
+            default:
+                break;
+        }
+        await this.mouseOverAndClickMore();
+        // @TODO await products.checkProductQuantityPrice(1);
+        await this.changeProductQuantity(qty);
+        // @TODO await products.checkProductQuantityPrice(3);
+        await this.changeProductSize(size);
+        await this.addToCart();
+        await this.proceedToCheckout();
+        // @TODO products.checkTotalPrice(3);
     }
 }
 

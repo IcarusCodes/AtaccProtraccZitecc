@@ -5,6 +5,12 @@ const fs = require('fs-extra');
 exports.config = {
   framework: 'jasmine',
   seleniumAddress: 'http://localhost:4444/wd/hub',
+  // @TODO maybe set everything up into suites?
+  // suites: {
+  //   okspec: 'suites/ok_spec.js',
+  //   okmany: ['suites/ok_spec.js', 'suites/ok_2_spec.js'],
+  //   failingtest: 'suites/always_fail_spec.js'
+  // },
   specs: ['tests/checkoutRegressionSuite.spec.js'],
   SELENIUM_PROMISE_MANAGER: false,
   onPrepare: function(){
